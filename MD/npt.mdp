@@ -1,0 +1,49 @@
+integrator          = md
+nsteps              = 50000 ; total 100.0 ps.
+dt                  = 0.002 ; ps !
+;define                   = -DPOSRES
+;COM removal
+nstcomm             = 10
+comm_mode           = Linear
+; output coordinates every 2.0 ps
+nstxout-compressed  = 50000
+compressed-x-precision  = 1000
+nstlog              = 5000
+;neighbor searching
+nstcalcenergy = 10
+ns_type             = grid
+rlist               = 0.9
+verlet-buffer-tolerance  = 0.005
+; Electrostatics
+cutoff-scheme            = Verlet
+coulombtype              = PME
+rcoulomb                 = 0.9
+; van der Waals
+rvdw                     = 0.9
+pme_order           = 4
+fourierspacing	= 0.16
+; Berendsen temperature coupling is on in four groups
+Tcoupl              = V-rescale
+tau_t               = 0.1        0.1   
+tc_grps             = protein    non-protein  
+ref_t               = 310        310   
+; Pressure coupling is on
+Pcoupl              = Parrinello-Rahman
+pcoupltype          = isotropic
+tau_p               = 0.5
+compressibility     = 4.5e-5
+ref_p               = 1.0
+; Generate velocites is on at 310 K.
+gen_vel             = no
+gen_temp            = 310.0
+gen_seed            = -1
+pbc                 = xyz
+continuation        = yes
+; bond parameter
+constraints         = all-bonds
+constraint-algorithm = lincs
+lincs-order          = 4
+lincs-iter          = 1
+; continue
+DispCorr            = EnerPres
+refcoord_scaling = com
